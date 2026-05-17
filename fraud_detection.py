@@ -11,7 +11,7 @@ import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
-
+import google.generativeai as genai
 from sklearn.model_selection import train_test_split
 
 from sklearn.linear_model import LogisticRegression
@@ -58,7 +58,14 @@ st.set_page_config(
     page_icon="💳",
     layout="wide"
 )
-# =========================================================
+genai.configure(
+    api_key="AIzaSyA_j7ZKqlUOgdHrGLPihaCkyixqDEfP3h0"
+)
+
+model = genai.GenerativeModel(
+    "models/gemini-1.5-flash"
+)
+#=========================================================
 # DATABASE SETUP
 # =========================================================
 
@@ -379,6 +386,7 @@ page = st.sidebar.radio(
     "🏦 Navigation",
     [
         "🏠 Home",
+        "🤖 AI Chatbot",
         "🏦 Banking System",
         "📜 Transactions",
         "🔍 Fraud Prediction",
@@ -1128,6 +1136,94 @@ if page == "🌍 Universal AI":
                 st.write(f"MAE : {mae:.2f}")
 
                 st.write(f"R2  : {r2:.2f}")
+                # =====================================
+# =====================================
+# AI CHATBOT
+# =====================================
+
+if page == "🤖 AI Chatbot":
+
+    st.title("🤖 AI Banking Assistant")
+
+    st.write(
+        "Talk with your AI Assistant"
+    )
+
+    # USER INPUT
+
+    user_question = st.text_input(
+        "Type Your Message"
+    )
+
+    # SEND BUTTON
+
+    if st.button("Send"):
+
+        if user_question != "":
+
+            question = user_question.lower()
+
+            # GREETINGS
+
+            if "hi" in question or "hello" in question:
+
+                st.success(
+                    "👋 Hello! How are you today?"
+                )
+
+            elif "how are you" in question:
+
+                st.success(
+                    "😊 I'm doing great! Thanks for asking."
+                )
+
+            # BANKING
+
+            elif "balance" in question:
+
+                st.success(
+                    "💰 Your banking balance system is active."
+                )
+
+            elif "deposit" in question:
+
+                st.success(
+                    "🏦 Deposit feature is available in Banking System."
+                )
+
+            elif "withdraw" in question:
+
+                st.success(
+                    "💸 Withdraw feature is active."
+                )
+
+            # FRAUD
+
+            elif "fraud" in question:
+
+                st.success(
+                    "🔍 Fraud Detection AI is working successfully."
+                )
+
+            # AI
+
+            elif "ai" in question:
+
+                st.success(
+                    "🤖 This project uses Artificial Intelligence and Machine Learning."
+                )
+
+            # DEFAULT
+
+            else:
+
+                st.success(
+                    f"🤖 You said: {user_question}"
+                )
+
+                st.write(
+                    "I'm your friendly AI Banking Assistant 😎"
+                )
 
 # =========================================================
 # ABOUT PAGE
@@ -1178,6 +1274,13 @@ To build a professional AI-powered banking
 fraud detection system.
 
 """)
+
+
+
+
+
+
+
 
 
 
